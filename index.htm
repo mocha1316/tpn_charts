@@ -1,0 +1,112 @@
+<head>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<script>
+    let weight, height, BMI, age, sex;
+    let stress_factor, activity_factor;
+    let protein_req_min, protein_req_max;
+    let weight_change_period;
+    let basal, adjusted_basal;
+    window.onload = function run() { recalculate_all(); }
+    function recalculate_all() {
+        load_input();
+        calculate_BMI();
+        calculate_basal();
+    }
+    function load_input() {
+        weight = document.getElementById("user_weight").value;
+        height = document.getElementById("user_height").value;
+        age = document.getElementById("user_age").value;
+        sex = document.getElementById("user_sex").value;
+        stress_factor = document.getElementById("user_stress_factor").value;
+        activity_factor = document.getElementById("user_activity_factor").value;
+    }
+    function calculate_BMI() {
+        BMI = weight / ((height * height) / 10000);
+        document.getElementById("calculated_bmi").innerHTML = roundToOneDecimalPlaces(BMI);
+    }
+    function calculate_basal() {
+        if (sex == "Male") {
+            basal = 66.5 + (13.75 * weight) + (5.003 * height) - (6.775 * age);
+            
+        }
+        else if (sex == "Female") {
+            basal = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age);
+        }
+        adjusted_basal = basal * stress_factor * activity_factor;
+        document.getElementById("calculated_base_basal").innerHTML = roundToOneDecimalPlaces(basal);
+        document.getElementById("calculated_adjusted_basal").innerHTML = roundToOneDecimalPlaces(adjusted_basal);
+    }
+    function roundToZeroDecimalPlaces(data) {
+        return Math.round(data);
+    }
+    function roundToOneDecimalPlaces(data) {
+        return Math.round(data * 10) / 10;
+    }
+    function roundToTwoDecimalPlaces(data) {
+        return Math.round(data * 100) / 100;
+    }
+</script>
+<table>
+    <tr>
+        <th colspan="2">INPUT</th>
+    </tr>
+    <tr>
+        <td style="width:150px">Weight (kg)</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_weight" value="75"></td>
+    </tr>
+    <tr>
+        <td>Usual Weight (kg)</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_usualweight" value="75"></td>
+    </tr>
+    <tr>
+        <td>Height (cm)</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_height" value="180"></td>
+    </tr>
+    <tr>
+        <td>Age</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_age" value="30"></td>
+    </tr>
+    <tr>
+        <td>Sex</td>
+        <td><select style="width:100px" onchange="recalculate_all()" id="user_sex">
+                <option value="Male">Male
+                <option value="Female">Female
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Stress Factor</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_stress_factor" value="1.0">
+        </td>
+    </tr>
+    <tr>
+        <td>Activity Factor</td>
+        <td><input style="width:100px" oninput="recalculate_all()" type="text" id="user_activity_factor" value="1.0">
+        </td>
+    </tr>
+    <tr>
+        <td>-</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>BMI</td>
+        <td id="calculated_bmi"></td>
+    </tr>
+    <tr>
+        <td>Basal Base (kcal)</td>
+        <td id="calculated_base_basal"></td>
+    </tr>
+    <tr>
+        <td>Basal Adjusted (kcal)</td>
+        <td id="calculated_adjusted_basal"></td>
+    </tr>
+</table>
