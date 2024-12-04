@@ -44,7 +44,7 @@
         protein_req_mid = (protein_req_max + protein_req_min) / 2;
 
         //weight_change_percent = (Math.abs(usual_weight - weight) / usual_weight) * 100;
-        weight_change_percent = ((usual_weight - weight) / usual_weight) * 100;
+        weight_change_percent = ((weight - usual_weight) / usual_weight) * 100;
     }
     function calculate_BMI() {
         BMI = weight / ((height * height) / 10000);
@@ -79,52 +79,52 @@
         const significant = "Significant";
         const severe = "Severe";
         //let weight_change_percent_rounded = Math.round(weight_change_percent);
-
+        let weight_change_percent_abs = Math.abs(weight_change_percent);
         if (weight_change_period_check == "week") {
-            if (weight_change_percent >= 1 && weight_change_percent <= 2)
+            if (weight_change_percent_abs >= 1 && weight_change_percent_abs <= 2)
                 weight_words = significant;
 
-            else if (weight_change_percent > 2)
+            else if (weight_change_percent_abs > 2)
                 weight_words = severe;
 
             else
                 weight_words = notsignificant;
         }
         else if (weight_change_period_check == "month") {
-            if (weight_change_percent >= 5 && weight_change_percent < 6)
+            if (weight_change_percent_abs >= 5 && weight_change_percent_abs < 6)
                 weight_words = significant;
 
-            else if (weight_change_percent >= 6)
+            else if (weight_change_percent_abs >= 6)
                 weight_words = severe;
 
             else
                 weight_words = notsignificant;
         }
         else if (weight_change_period_check == "3months") {
-            if (weight_change_percent >= 7.5 && weight_change_percent < 8)
+            if (weight_change_percent_abs >= 7.5 && weight_change_percent_abs < 8)
                 weight_words = significant;
 
-            else if (weight_change_percent >= 8)
+            else if (weight_change_percent_abs >= 8)
                 weight_words = severe;
 
             else
                 weight_words = notsignificant;
         }
         else if (weight_change_period_check == "6months") {
-            if (weight_change_percent >= 10 && weight_change_percent < 11)
+            if (weight_change_percent_abs >= 10 && weight_change_percent_abs < 11)
                 weight_words = significant;
 
-            else if (weight_change_percent >= 11)
+            else if (weight_change_percent_abs >= 11)
                 weight_words = severe;
 
             else
                 weight_words = notsignificant;
         }
         else if (weight_change_period_check == "unlimited") {
-            if (weight_change_percent >= 10 && weight_change_percent < 20)
+            if (weight_change_percent_abs >= 10 && weight_change_percent_abs < 20)
                 weight_words = significant;
 
-            else if (weight_change_percent >= 20)
+            else if (weight_change_percent_abs >= 20)
                 weight_words = severe;
 
             else
